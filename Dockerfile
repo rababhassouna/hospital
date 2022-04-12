@@ -100,7 +100,10 @@ RUN apk add --no-cache --virtual .pgsql-deps postgresql-dev; \
 	apk del .pgsql-deps
 ###< doctrine/doctrine-bundle ###
 ###< recipes ###
-
+###>add symfony binaries###
+RUN apk add --no-cache bash\
+    wget https://get.symfony.com/cli/installer -O - | bash && mv /root/.symfony/bin/symfony /usr/local/bin/symfony
+###<add symfony binaries###
 COPY . .
 
 RUN set -eux; \
