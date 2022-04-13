@@ -18,6 +18,8 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         api:
+            logout:
+                path: api_token_invalidate
             pattern: ^/api
             stateless: true
             entry_point: jwt

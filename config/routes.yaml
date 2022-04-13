@@ -1,6 +1,7 @@
 controllers:
     resource: ../src/Controller/
     type: annotation
+    prefix: api
 
 kernel:
     resource: ../src/Kernel.php
@@ -11,3 +12,7 @@ api_refresh_token:
 
 api_login_check:
     path: /api/login
+
+api_token_invalidate:
+    path: /api/token/invalidate
+    

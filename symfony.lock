@@ -89,6 +89,21 @@
     "gesdinet/jwt-refresh-token-bundle": {
         "version": "v1.1.1"
     },
+    "jms/metadata": {
+        "version": "2.6.1"
+    },
+    "jms/serializer": {
+        "version": "3.17.1"
+    },
+    "jms/serializer-bundle": {
+        "version": "4.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "384cec52df45f3bfd46a09930d6960a58872b268"
+        }
+    },
     "laminas/laminas-code": {
         "version": "4.5.1"
     },
@@ -116,6 +131,9 @@
     "nikic/php-parser": {
         "version": "v4.13.2"
     },
+    "phpstan/phpdoc-parser": {
+        "version": "1.4.3"
+    },
     "psr/cache": {
         "version": "3.0.0"
     },
@@ -127,6 +145,18 @@
     },
     "psr/log": {
         "version": "3.0.0"
+    },
+    "sensio/framework-extra-bundle": {
+        "version": "6.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "5.2",
+            "ref": "fb7e19da7f013d0d422fa9bce16f5c510e27609b"
+        },
+        "files": [
+            "config/packages/sensio_framework_extra.yaml"
+        ]
     },
     "symfony/cache": {
         "version": "v6.0.6"
@@ -188,6 +218,9 @@
             ".env"
         ]
     },
+    "symfony/form": {
+        "version": "v6.0.7"
+    },
     "symfony/framework-bundle": {
         "version": "6.0",
         "recipe": {
@@ -207,6 +240,12 @@
             "src/Kernel.php"
         ]
     },
+    "symfony/http-client": {
+        "version": "v6.0.7"
+    },
+    "symfony/http-client-contracts": {
+        "version": "v3.0.1"
+    },
     "symfony/http-foundation": {
         "version": "v6.0.7"
     },
@@ -222,10 +261,16 @@
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
     },
+    "symfony/options-resolver": {
+        "version": "v6.0.3"
+    },
     "symfony/password-hasher": {
         "version": "v6.0.3"
     },
     "symfony/polyfill-intl-grapheme": {
+        "version": "v1.25.0"
+    },
+    "symfony/polyfill-intl-icu": {
         "version": "v1.25.0"
     },
     "symfony/polyfill-intl-normalizer": {
@@ -294,6 +339,18 @@
     },
     "symfony/translation-contracts": {
         "version": "v3.0.1"
+    },
+    "symfony/validator": {
+        "version": "6.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "5.3",
+            "ref": "c32cfd98f714894c4f128bb99aa2530c1227603c"
+        },
+        "files": [
+            "config/packages/validator.yaml"
+        ]
     },
     "symfony/var-dumper": {
         "version": "v6.0.6"
