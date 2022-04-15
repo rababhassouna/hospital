@@ -20,8 +20,13 @@ class UserController extends AbstractFOSRestController
      * @ParamConverter("user", converter="fos_rest.request_body")
      */
 
-    public function registerUser(User $user, UserPasswordHasherInterface $passwordHasher, EntityManagerInterface $em, JWTTokenManagerInterface $JWTManager, ConstraintViolationListInterface $validationErrors): Response
-    {
+    public function registerUser(
+        User $user,
+        UserPasswordHasherInterface $passwordHasher,
+        EntityManagerInterface $em,
+        JWTTokenManagerInterface $JWTManager,
+        ConstraintViolationListInterface $validationErrors
+    ): Response {
         if (count($validationErrors) > 0) {
             return $this->handleView(View::create($validationErrors, Response::HTTP_BAD_REQUEST));
         }
