@@ -38,8 +38,6 @@ class UserController extends AbstractFOSRestController
         $em->persist($user);
         $em->flush();
 
-        $user->getUserIdentifier();
-
         return View::create(['token' => $JWTManager->create($user)], Response::HTTP_CREATED);
     }
 }
