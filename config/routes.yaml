@@ -1,18 +1,17 @@
 controllers:
-    resource: ../src/Controller/
-    type: annotation
-    prefix: api
+  resource: ../src/Controller/
+  type: annotation
+  prefix: /api
 
 kernel:
-    resource: ../src/Kernel.php
-    type: annotation
+  resource: ../src/Kernel.php
+  type: annotation
 
 api_refresh_token:
-    path: /api/token/refresh
+  path: /api/token/refresh
 
 api_login_check:
-    path: /api/login
+  path: /api/login
 
-api_token_invalidate:
-    path: /api/token/invalidate
-    
+user_logout:
+  path: /api/logout
