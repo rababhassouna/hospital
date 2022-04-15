@@ -19,7 +19,8 @@ services:
       start_period: 30s
     environment:
       # Run "composer require symfony/orm-pack" to install and configure Doctrine ORM
-      DATABASE_URL: postgresql://${POSTGRES_USER:-symfony}:${POSTGRES_PASSWORD:-ChangeMe}@database:5432/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-13}
+      #   DATABASE_URL: postgresql://${POSTGRES_USER:-symfony}:${POSTGRES_PASSWORD:-ChangeMe}@database:5432/${POSTGRES_DB:-app}?serverVersion=${POSTGRES_VERSION:-13}
+      DATABASE_URL: mysql://${MYSQL_USER:-symfony}:${MYSQL_PASSWORD:-root}@database:3306/${MYSQL_DB:-app}?serverVersion=${MYSQL_VERSION:-5.7}
       # Run "composer require symfony/mercure-bundle" to install and configure the Mercure integration
       MERCURE_URL: ${CADDY_MERCURE_URL:-http://caddy/.well-known/mercure}
       MERCURE_PUBLIC_URL: https://${SERVER_NAME:-localhost}/.well-known/mercure
@@ -54,31 +55,56 @@ services:
         published: ${HTTP3_PORT:-443}
         protocol: udp
 
-# Mercure is installed as a Caddy module, prevent the Flex recipe from installing another service
-###> symfony/mercure-bundle ###
-###< symfony/mercure-bundle ###
+  # Mercure is installed as a Caddy module, prevent the Flex recipe from installing another service
+  ###> symfony/mercure-bundle ###
+  ###< symfony/mercure-bundle ###
 
-###> doctrine/doctrine-bundle ###
+  ###> doctrine/doctrine-bundle ###
+  #   database:
+  #     image: postgres:${POSTGRES_VERSION:-13}-alpine
+  #     environment:
+  #       POSTGRES_DB: ${POSTGRES_DB:-app}
+  #       # You should definitely change the password in production
+  #       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ChangeMe}
+  #       POSTGRES_USER: ${POSTGRES_USER:-symfony}
+  #     volumes:
+  #       - db-data:/var/lib/postgresql/data:rw
+  # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+  # - ./docker/db/data:/var/lib/postgresql/data:rw
   database:
-    image: postgres:${POSTGRES_VERSION:-13}-alpine
+    image: mysql:${MYSQL_VERSION:-5.7}
+    restart: always
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-app}
-      # You should definitely change the password in production
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ChangeMe}
-      POSTGRES_USER: ${POSTGRES_USER:-symfony}
+      MYSQL_VERSION: ${MYSQL_VERSION:-5.7}
+      MYSQL_DATABASE: ${MYSQL_DB:-app}
+      MYSQL_USER: ${MYSQL_USER:-symfony}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-root}
+      MYSQL_PORT: ${MYSQL_PORT:-3306}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
     volumes:
-      - db-data:/var/lib/postgresql/data:rw
-      # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
-      # - ./docker/db/data:/var/lib/postgresql/data:rw
-###< doctrine/doctrine-bundle ###
+      - db-data:/var/lib/mysql:rw
+  ###< doctrine/doctrine-bundle ###
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    restart: on-failure
+    links:
+      - database
+    ports:
+      - ${PMA_PORT:-8080}:80
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_USER: ${MYSQL_USER:-symfony}
+      PMA_HOST: database
+      PMA_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
 
 volumes:
   php_socket:
   caddy_data:
   caddy_config:
-###> symfony/mercure-bundle ###
-###< symfony/mercure-bundle ###
+  ###> symfony/mercure-bundle ###
+  ###< symfony/mercure-bundle ###
 
-###> doctrine/doctrine-bundle ###
+  ###> doctrine/doctrine-bundle ###
   db-data:
 ###< doctrine/doctrine-bundle ###

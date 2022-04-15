@@ -19,7 +19,7 @@ security:
             security: false
         api:
             logout:
-                path: api_token_invalidate
+                path: user_logout
             pattern: ^/api
             stateless: true
             entry_point: jwt
